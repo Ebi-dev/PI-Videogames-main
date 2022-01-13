@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
     },
     name: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
     },
     description: {
@@ -19,10 +20,10 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     releaseDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
     },
     rating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     platforms: {
       type: DataTypes.STRING,
@@ -32,7 +33,7 @@ module.exports = (sequelize) => {
 
   sequelize.define("Genre", {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true,
     },
     name: {
