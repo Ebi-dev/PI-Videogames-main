@@ -4,7 +4,7 @@ const { YOUR_API_KEY } = process.env;
 
 const getAll = async (req, res, next) => {
   try {
-    let pedido;
+    let pedido, pedi2, pedi3, pedidofinal;
     if (req.query.name) {
       gameName = req.query.name;
       pedido = await axios.get(
@@ -14,12 +14,28 @@ const getAll = async (req, res, next) => {
       pedido = await axios.get(
         `https://api.rawg.io/api/games?key=${YOUR_API_KEY}&page_size=40`
       );
+
+      pedi2 = await axios.get(
+        `https://api.rawg.io/api/games?key=${YOUR_API_KEY}&page=2&page_size=40`
+      );
+
+      pedi3 = await axios.get(
+        `https://api.rawg.io/api/games?key=${YOUR_API_KEY}&page=5&page_size=20`
+      );
+
+      pedidofinal = [...pedido.data.results, ...pedi2.data.results, ...pedi3.data.results];
+      // pedido.data.results.push(await axios.get(
+      //   `https://api.rawg.io/api/games?key=${YOUR_API_KEY}&page=2&page_size=40`
+      // ).data.results)
+      // pedido.data.results.push(await axios.get(
+      //   `https://api.rawg.io/api/games?key=${YOUR_API_KEY}&page=3&page_size=40`
+      // ).data.results)
     }
 
     const pedidoBaseDatos = await Videogame.findAll({ include: Genre });
     //console.log(JSON.stringify(pedidoBaseDatos));
-    if (pedido || pedidoBaseDatos) {
-      let aux = pedido.data.results?.map((game) => {
+    if (pedidofinal || pedidoBaseDatos) {
+      let aux = pedidofinal?.map((game) => {
         return {
           name: game.name,
           genres: game.genres,

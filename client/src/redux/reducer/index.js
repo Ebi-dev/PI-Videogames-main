@@ -7,12 +7,13 @@ import {
   GET_ALL_FILTERED,
   FILTER,
   ORDENAR,
+  PAGINADO,
 } from "../actions";
 
 const initialState = {
   videogames: [],
   genres: [],
-  filtrados: [],
+  pages: [],
 };
 
 function reducer(state = initialState, action) {
@@ -35,58 +36,64 @@ function reducer(state = initialState, action) {
       return { ...state, videogames: action.payload };
     case GET_ALL_FILTERED:
       console.log("get all filtered");
-      return { ...state, videogames: action.payload };
+      return {
+        ...state,
+        videogames: action.payload.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          if (a.name < b.name) return -1;
+          return 0;
+        }),
+      };
 
     case ORDENAR:
       console.log("Ordenar");
       if (action.payload.tipo === "Alfabeticamente") {
-        console.log("Alfabeticamente y ");
+        //console.log("Alfabeticamente y ");
         if (action.payload.ascendiente === "Ascendiente") {
-          console.log("Ascendiente");
+          //console.log("Ascendiente");
           return {
             ...state,
             videogames: state.videogames.sort((a, b) => {
-              if(a.name > b.name) return 1;
-              if(a.name < b.name) return -1;
+              if (a.name > b.name) return 1;
+              if (a.name < b.name) return -1;
               return 0;
             }),
           };
         } else {
-          console.log("Descendiente");
+          //console.log("Descendiente");
           return {
             ...state,
             videogames: state.videogames.sort((a, b) => {
-              if(a.name < b.name) return 1;
-              if(a.name > b.name) return -1;
+              if (a.name < b.name) return 1;
+              if (a.name > b.name) return -1;
               return 0;
             }),
           };
         }
       } else {
-        console.log("Por rating y ");
+        //console.log("Por rating y ");
         if (action.payload.ascendiente === "Ascendiente") {
-          console.log("Ascendiente");
+          //console.log("Ascendiente");
           return {
             ...state,
             videogames: state.videogames.sort((a, b) => {
-              if(a.rating > b.rating) return 1;
-              if(a.rating < b.rating) return -1;
+              if (a.rating > b.rating) return 1;
+              if (a.rating < b.rating) return -1;
               return 0;
             }),
           };
         } else {
-          console.log("Descendiente");
+          //console.log("Descendiente");
           return {
             ...state,
             videogames: state.videogames.sort((a, b) => {
-              if(a.rating < b.rating) return 1;
-              if(a.rating > b.rating) return -1;
+              if (a.rating < b.rating) return 1;
+              if (a.rating > b.rating) return -1;
               return 0;
             }),
           };
         }
       }
-
 
     case FILTER:
       console.log("filter");
@@ -97,6 +104,21 @@ function reducer(state = initialState, action) {
         ...state,
         videogames: filtered,
       };
+    case PAGINADO:
+      let page1, page2, page3, page4, page5, page6;
+      page1 = state.videogames.slice(0, 15);
+      page2 = state.videogames.slice(15, 30);
+      page3 = state.videogames.slice(30, 45);
+      page4 = state.videogames.slice(60, 75);
+      page5 = state.videogames.slice(75, 90);
+      page6 = state.videogames.slice(90, 100);
+      let final = [page1, page2, page3, page4, page5, page6];
+      for (let i = final.length; i > 0; i--) {
+        if (final[i].length === 0) {
+          final.pop();
+        }
+      }
+      return { ...state, pages: final };
     default:
       console.log("default");
       return state;

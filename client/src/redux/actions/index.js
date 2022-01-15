@@ -7,6 +7,7 @@ export const GET_GENRES = "GET_GENRES";
 export const GET_ALL_FILTERED = "GET_ALL_FILTERED";
 export const FILTER = "FILTER";
 export const ORDENAR = "ORDENAR";
+export const PAGINADO = "PAGINADO";
 
 export function getAllGames(onlyDb = false) {
   return async function pedido(dispatch) {
@@ -99,6 +100,8 @@ export function Ordenamiento(tipo, ascendiente) {
     });
   };
 }
+
+
 
 // export const getAllGames = () => (dispatch) => {
 //   return fetch("http://localhost:3001/videogames")

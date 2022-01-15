@@ -13,7 +13,7 @@ function GameCards({ games }) {
       {/* {console.log("games: " + JSON.stringify(games))} */}
       <ul>
         {games &&
-          games.map((game) => {
+          games.map((game, index) => {
             return (
               <div key={game.id}>
                 {/* {console.log(game)} */}

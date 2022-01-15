@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAllFiltered,
   getGamesByGenre,
@@ -8,6 +8,8 @@ import {
 
 function Filter({ genres, videogames }) {
   const dispatch = useDispatch();
+
+  const gstate = useSelector(gstate => gstate)
 
   const [state, setState] = useState({
     existentes: true,
