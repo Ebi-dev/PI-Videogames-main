@@ -7,35 +7,36 @@ import {
   GET_ALL_FILTERED,
   FILTER,
   ORDENAR,
-  PAGINADO,
+  DETAIL,
 } from "../actions";
 
 const initialState = {
   videogames: [],
   genres: [],
   pages: [],
+  detalle: {},
 };
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_GAMES:
-      console.log("get all games");
+      // console.log("get all games");
       return {
         ...state,
         videogames: action.payload,
         filtrados: action.payload,
       };
     case GET_GAMES_BY_NAME:
-      console.log("get games by name");
+      // console.log("get games by name");
       return { ...state, videogames: action.payload };
     case GET_GENRES:
-      console.log("get genres");
+      // console.log("get genres");
       return { ...state, genres: action.payload };
     case GET_GAMES_BY_GENRE:
-      console.log("get games by genre");
+      // console.log("get games by genre");
       return { ...state, videogames: action.payload };
     case GET_ALL_FILTERED:
-      console.log("get all filtered");
+      // console.log("get all filtered");
       return {
         ...state,
         videogames: action.payload.sort((a, b) => {
@@ -44,9 +45,12 @@ function reducer(state = initialState, action) {
           return 0;
         }),
       };
-
+    case DETAIL:
+      // console.log("Detalle");
+      // console.log(action.payload);
+      return { ...state, detalle: action.payload };
     case ORDENAR:
-      console.log("Ordenar");
+      // console.log("Ordenar");
       if (action.payload.tipo === "Alfabeticamente") {
         //console.log("Alfabeticamente y ");
         if (action.payload.ascendiente === "Ascendiente") {
@@ -96,7 +100,7 @@ function reducer(state = initialState, action) {
       }
 
     case FILTER:
-      console.log("filter");
+      // console.log("filter");
       const filtered = action.payload.games.filter((g) => {
         return g.id.toString().includes("-") === action.payload.filtro;
       });
@@ -104,23 +108,8 @@ function reducer(state = initialState, action) {
         ...state,
         videogames: filtered,
       };
-    case PAGINADO:
-      let page1, page2, page3, page4, page5, page6;
-      page1 = state.videogames.slice(0, 15);
-      page2 = state.videogames.slice(15, 30);
-      page3 = state.videogames.slice(30, 45);
-      page4 = state.videogames.slice(60, 75);
-      page5 = state.videogames.slice(75, 90);
-      page6 = state.videogames.slice(90, 100);
-      let final = [page1, page2, page3, page4, page5, page6];
-      for (let i = final.length; i > 0; i--) {
-        if (final[i].length === 0) {
-          final.pop();
-        }
-      }
-      return { ...state, pages: final };
     default:
-      console.log("default");
+      // console.log("default");
       return state;
   }
 }

@@ -8,6 +8,7 @@ export const GET_ALL_FILTERED = "GET_ALL_FILTERED";
 export const FILTER = "FILTER";
 export const ORDENAR = "ORDENAR";
 export const PAGINADO = "PAGINADO";
+export const DETAIL = "DETAIL";
 
 export function getAllGames(onlyDb = false) {
   return async function pedido(dispatch) {
@@ -52,7 +53,7 @@ export function getAllFiltered(showDb = false) {
 export function getGamesByName(name) {
   return async function pedido(dispatch) {
     let aux = await axios.get(`http://localhost:3001/videogames?name=${name}`);
-    console.log(aux.data);
+    // console.log(aux.data);
     return dispatch({
       type: GET_GAMES_BY_NAME,
       payload: aux.data,
@@ -63,7 +64,7 @@ export function getGamesByName(name) {
 export function getGenres() {
   return async function pedido(dispatch) {
     let aux = await axios.get("http://localhost:3001/genres");
-    console.log(aux.data);
+    // console.log(aux.data);
     return dispatch({
       type: GET_GENRES,
       payload: aux.data,
@@ -101,7 +102,36 @@ export function Ordenamiento(tipo, ascendiente) {
   };
 }
 
+export function gameDetail(gameId) {
+  return async function detalles(dispatch) {
+    let aux = await axios.get(`http://localhost:3001/videogame/${gameId}`);
+    // if(gameId.includes("-")){
+    //   return dispatch({ type: DETAIL, payload: aux.data[0] });
+    // }
+    return dispatch({ type: DETAIL, payload: aux.data });
+  };
+}
 
+export function newGame(info) {
+  return async function postGame() {
+    let body = {
+      game: {
+        name: info.name,
+        description: info.description,
+        releaseDate: info.released,
+        rating: info.rating.toString(),
+        platforms: info.platforms.join(", "),
+      },
+      genreIds: info.genres,
+    };
+    try {
+      await axios.post("http://localhost:3001/videogame", body);
+      alert("creado satisfactoriamente");
+    } catch (error) {
+      alert("error, el juego ya se encuentra en la base de datos");
+    }
+  };
+}
 
 // export const getAllGames = () => (dispatch) => {
 //   return fetch("http://localhost:3001/videogames")

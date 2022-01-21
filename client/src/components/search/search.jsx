@@ -12,6 +12,7 @@ export default function Search({ onSearch }) {
   return (
     <div className={styles.container}>
         <input
+        autoComplete="off"
         className={styles.input}
         id="searchInput"
         type="text"

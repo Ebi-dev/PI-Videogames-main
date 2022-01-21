@@ -11,9 +11,9 @@ const getById = async (req, res, next) => {
       if (id.includes("-")) {
         pedidoBaseDatos = await Videogame.findAll(
           {
+            include: Genre,
             where: { id: id },
-          },
-          { include: Genre }
+          }
         );
       } else {
         pedido = await axios.get(
@@ -32,7 +32,7 @@ const getById = async (req, res, next) => {
             genres: pedido.data.genres,
             image: pedido.data.background_image,
             description: pedido.data.description_raw,
-            release: pedido.data.release,
+            released: pedido.data.released,
             rating: pedido.data.rating,
             platforms: pedido.data.platforms?.map((p) => {
               return p.platform.name;
@@ -57,6 +57,7 @@ const newGame = async (req, res, next) => {
   const { game, genreIds } = req.body;
   if (game) {
     try {
+
       let nuevo = await Videogame.create(game);
 
       let arr = [];

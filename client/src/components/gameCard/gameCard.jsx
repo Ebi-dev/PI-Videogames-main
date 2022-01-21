@@ -1,25 +1,36 @@
 import React from "react";
-import styles from "./gameCard.module.css"
+import styles from "./gameCard.module.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { gameDetail } from "../../redux/actions";
 
-function GameCard({ name, image, genres, dbGenres }) {
+function GameCard({ id, name, image, genres, dbGenres }) {
+  const dispatch = useDispatch();
 
-  if(!image){
-    image = "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725020-stock-illustration-no-image-available-icon-flat.jpg"
+  if (!image) {
+    image =
+      "https://upload.wikimedia.org/wikipedia/commons/7/75/No_image_available.png";
+  }
+  const navigate = useNavigate();
+
+  function handleRedirect() {
+    // console.log("dispatching id: " + id);
+    dispatch(gameDetail(id));
+    navigate(`/details`);
   }
 
   return (
-    <div className="card">
-      <div id="closeIcon" className="row"></div>
-      <div className="card-body">
-        <h5 className="card-title">{name}</h5>
-        <div className="row">
-          <ul syle={styles}>
-            <li>{genres?.join(', ')}</li>
-            <li>{dbGenres?.join(', ')}</li>
-          </ul>
-          <img style={{ height: 250, width: 400 }} src={image} alt="gameImg" />
+    <div className={styles.card} onClick={handleRedirect}>
+      <h5 className={styles.cardTitle}>{name}</h5>
+
+      <ul>
+        <div className={styles.genres}>
+          <li>{genres?.join(", ")}</li>
+          <li>{dbGenres?.join(", ")}</li>
         </div>
-      </div>
+      </ul>
+
+      <img src={image} alt="gameImg" />
     </div>
   );
 }

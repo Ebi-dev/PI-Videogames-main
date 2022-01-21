@@ -1,20 +1,31 @@
-.btn{
-    background-color: #CDB4DB;
-    color:azure;
-    max-width: 5rem;
-    margin-left: 0.5em;
-    border-radius: 0.3em;
-    border-color: transparent;
+.btn {
+  background-color: #cdb4db;
+  color: azure;
+  max-width: 5rem;
+  margin-left: 0.5em;
+  border-radius: 0.3em;
+  border-color: transparent;
 }
-.input{
-    border-style: solid;
-    border-color: #FFAFCC;
-    background-color: #FFC8DD;
+.input {
+  width: 30rem;
+  height: 2rem;
+  border-style: solid;
+  border-radius: 0.2em;
+  border-color: rgb(80, 80, 80);
+  background-color: slateblue;
+  font-size: 2em;
+  color: whitesmoke;
+  box-shadow: 0px 0px 20px 12px rgba(0, 0, 0, 0.45);
+  -webkit-box-shadow: 0px 0px 20px 12px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0px 0px 20px 12px rgba(0, 0, 0, 0.45);
 }
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 0.5rem;
-
+::placeholder {
+  color: rgba(245, 245, 245, 0.452);
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
 }

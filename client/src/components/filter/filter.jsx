@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import styles from "./filter.module.css";
 import {
   getAllFiltered,
   getGamesByGenre,
   Ordenamiento,
 } from "../../redux/actions/index";
 
-function Filter({ genres, videogames }) {
+function Filter({ genres }) {
   const dispatch = useDispatch();
-
-  const gstate = useSelector(gstate => gstate)
 
   const [state, setState] = useState({
     existentes: true,
@@ -20,7 +19,7 @@ function Filter({ genres, videogames }) {
 
   //Filtro por genero
   useEffect(() => {
-    console.log("useEffect genres");
+    // console.log("useEffect genres");
     if (state.selectedGenre !== "notDefined") {
       dispatch(getGamesByGenre(state.selectedGenre));
     } else {
@@ -30,8 +29,8 @@ function Filter({ genres, videogames }) {
 
   //Ver existentes o DB
   useEffect(() => {
-    console.log("useEffect existentes");  
-    console.log(state.existentes);
+    // console.log("useEffect existentes");
+    // console.log(state.existentes);
     if (state.existentes === true) {
       dispatch(getAllFiltered(false));
     } else {
@@ -41,7 +40,7 @@ function Filter({ genres, videogames }) {
 
   //Tipo de Ordenamiento
   useEffect(() => {
-    console.log("useEffect ordenamiento");
+    // console.log("useEffect ordenamiento");
     dispatch(Ordenamiento(state.ordenamiento, state.ascendiente));
   }, [state.ordenamiento, state.ascendiente]);
 
@@ -62,19 +61,22 @@ function Filter({ genres, videogames }) {
   }
 
   return (
-    <div>
-      <h4>Filtrar por existentes</h4>
-      <div>
-        <input
-          type="checkbox"
-          name="existentes"
-          id="1"
-          value={state.existentes}
-          onClick={handleCheck}
-          defaultChecked
-        />
-        <span>ver solo juegos existentes</span>
-        <span>{`   ---->estado: ${state.existentes}`}</span>
+    <div className={styles.container}>
+      <div className={styles.existentes}>
+        <h4>Filtrar por existentes</h4>
+        <span>
+          <input
+            type="checkbox"
+            name="existentes"
+            id="1"
+            value={state.existentes}
+            onClick={handleCheck}
+            defaultChecked
+            className={styles.checkbox}
+          />
+          ver solo juegos existentes
+        </span>
+        {/* <span>{`   ---->estado: ${state.existentes}`}</span> */}
       </div>
       <div>
         <h4>Filtrar por genero</h4>
@@ -98,12 +100,12 @@ function Filter({ genres, videogames }) {
                 );
               })}
           </select>
-          <span>{state.selectedGenre}</span>
+          {/* <span>{state.selectedGenre}</span> */}
         </div>
       </div>
       <div>
-        <h4>Ordenar:</h4>
         <div>
+          <h4>Ordenar:</h4>
           <select
             name="orden"
             id="5"
@@ -116,31 +118,30 @@ function Filter({ genres, videogames }) {
             <option value="Por Rating" key={1}>
               Por Rating
             </option>
-            
           </select>
-          <span>------{state.ordenamiento}</span>
+          {/* <span>------{state.ordenamiento}</span> */}
         </div>
-        <div>
-          <h4>sentido:</h4>
-          <input
-            type="radio"
-            name="sentido"
-            id="3"
-            value="Ascendiente"
-            onClick={handleSentido}
-            defaultChecked
-          />
-          <label>Ascendiente</label>
-          <input
-            type="radio"
-            name="sentido"
-            id="4"
-            value="Descendiente"
-            onClick={handleSentido}
-          />
-          <label>Descendiente</label>
-          <span> ---{state.ascendiente}</span>
-        </div>
+      </div>
+      <div>
+        <h4>sentido:</h4>
+        <input
+          type="radio"
+          name="sentido"
+          id="3"
+          value="Ascendiente"
+          onClick={handleSentido}
+          defaultChecked
+        />
+        <label>Ascendiente</label>
+        <input
+          type="radio"
+          name="sentido"
+          id="4"
+          value="Descendiente"
+          onClick={handleSentido}
+        />
+        <label>Descendiente</label>
+        {/* <span> ---{state.ascendiente}</span> */}
       </div>
     </div>
   );
